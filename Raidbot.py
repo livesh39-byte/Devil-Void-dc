@@ -31,20 +31,20 @@ class jeffreysballs(discord.ui.View):
         super().__init__(timeout=180)
         self.message = message
 
-    @discord.ui.button(label="spam", style=discord.ButtonStyle.danger)
-    async def fl00d(
-        self,
-        interaction: discord.Interaction,
-        button: discord.ui.Button
-    ):
-        await interaction.response.defer(ephemeral=True)
 
-        # Interaction response handling
-        await interaction.followup.send(
-            "Button interaction received.",
-            ephemeral=True
-        )
-        
+@discord.ui.button(label="spam", style=discord.ButtonStyle.danger)
+async def fl00d(
+    self,
+    interaction: discord.Interaction,
+    button: discord.ui.Button
+)
+    await interaction.response.defer(ephemeral=True)
+
+    await interaction.followup.send(
+        self.message,
+        ephemeral=False
+    )
+
 
 @client.tree.command(name="spam")
 @app_commands.allowed_installs(guilds=True, users=True)
