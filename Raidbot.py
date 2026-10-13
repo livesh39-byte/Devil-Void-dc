@@ -32,18 +32,23 @@ class jeffreysballs(discord.ui.View):
         self.message = message
 
 
+
 @discord.ui.button(label="spam", style=discord.ButtonStyle.danger)
 async def fl00d(
     self,
     interaction: discord.Interaction,
     button: discord.ui.Button
 ):
-    await interaction.response.defer(ephemeral=True)
+    try:
+        await interaction.response.defer(ephemeral=True)
 
-    await interaction.followup.send(
-        self.message,
-        ephemeral=False
-    )
+        await interaction.followup.send(
+            self.message,
+            ephemeral=False
+        )
+
+    except Exception as e:
+        print(f"Button error: {type(e).__name__}: {e}")
 
 
 @client.tree.command(name="spam")
