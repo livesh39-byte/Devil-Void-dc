@@ -25,25 +25,26 @@ async def say(interaction: discord.Interaction, message: str, ghost: bool = Fals
         await msg.delete()
 
 
+
 class jeffreysballs(discord.ui.View):
     def __init__(self, message: str):
-        super().__init__()
+        super().__init__(timeout=180)
         self.message = message
 
     @discord.ui.button(label="spam", style=discord.ButtonStyle.danger)
-async def fl00d(
-    self,
-    interaction: discord.Interaction,
-    button: discord.ui.Button
-):
-    await interaction.response.defer(ephemeral=True)
+    async def fl00d(
+        self,
+        interaction: discord.Interaction,
+        button: discord.ui.Button
+    ):
+        await interaction.response.defer(ephemeral=True)
 
-    for _ in range(5):
+        # Interaction response handling
         await interaction.followup.send(
-            self.message,
-            ephemeral=False
+            "Button interaction received.",
+            ephemeral=True
         )
-
+        
 
 @client.tree.command(name="spam")
 @app_commands.allowed_installs(guilds=True, users=True)
