@@ -77,11 +77,36 @@ async def poll_raid(interaction: discord.Interaction, message: str = "spammed"):
         ephemeral=True,
     )
 
+
+# Render Web Service Port Fix
 import os
+import asyncio
+from aiohttp import web
 
-TOKEN = os.getenv("DISCORD_TOKEN")
+async def health_check(request):
+    return web.Response(text="Devil Void Bot is online!")
 
-if not TOKEN:
-    raise RuntimeError("DISCORD_TOKEN environment variable is missing")
+async def start_web_server():
+    app = web.Application()
+    app.router.add_get("/", health_check)
+    app.router.add_get("/health", health_check)
 
-client.run(TOKEN)
+    runner = web.AppRunner(app)
+    await runner.setup()
+
+    port = int(os.environ.get("PORT", 10000))
+    site = web.TCPSite(runner, "0.0.0.0", port)
+    await site.start()
+
+    print(f"Web server running on port {port}")
+
+async def main():
+    async with client:
+        await start_web_server()
+        token = os.getenv("DISCORD_TOKEN")
+        if not token:
+            raise RuntimeError("DISCORD_TOKEN environment variable is missing")
+        await client.start(token)
+
+asyncio.run(main())
+
