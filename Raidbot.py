@@ -1,6 +1,6 @@
+import os
 import discord
 from discord import app_commands
-
 
 class BotClient(discord.Client):
     def __init__(self):
@@ -10,7 +10,6 @@ class BotClient(discord.Client):
 
     async def setup_hook(self):
         await self.tree.sync()
-
 
 client = BotClient()
 
